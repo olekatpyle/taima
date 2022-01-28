@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+
+#NOTE for myself: using 'from .. import init' will throw an import error, saying 
+#that attempting to impport beyond top level package. This is true,
+#because the argument handler gets called in the top level package, thus
+#in order to avoid this issue, you have to do the import as if you import
+#from top level.
+
+from _taima.init import init
+from _taima.main import run_taima 
+#from __view import view 
+#from __wipe import wipe
+#from util.db_connection import connect_db_quiet
+import argparse
+import curses
+from curses import wrapper
+
+#-----------------------------------------------------------------------------
+# ARGUMENT HANDLER
+#
+# This module is the starting point for every taima application call.
+# It mainly servers as argument parser, calling the respective function 
+# for the specified functionality. 
+
+
+# Argument handler, passed to the main function
+def handle() -> str:
+    parser: object = argparse.ArgumentParser(prog='taima', 
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description='''
+
+         \33[38;5;171m*######*      
+      *############*
+     *##############*                 
+    *################*          
+     *##############*                  \33[38;5;255mTaimā - TAIm MAnagement CLI-GUI Hybrid
+      \33[38;5;171m*##\33[38;5;182m*######*\33[38;5;171m##*                 \33[38;5;255mManage your time, spending working hard
+       \33[38;5;229m*#\33[38;5;182m########\33[38;5;229m#*
+      *############*
+       *##########*
+         *######*
+\033[0m                                     
+''',
+                                    )
+    subparsers: object = parser.add_subparsers(title='Additional arguements',
+                                       description='You may specify one of the following arguments',
+                                       help='Type taima [arg] -h for more information',
+                                       dest='subparser')
+
+    parser.add_argument('-t', '--task', dest='task',
+                        help='You may specify a task as program argument to directly start the timer on this task')
+    parser.set_defaults(func=wrapper)
+    
+    #---------------------
+    # init argument parser
+    
+    init_parser: object = subparsers.add_parser('init')
+    init_parser.set_defaults(func=init.initialize)
+
+    
+
+    #View arguement parser
+    view_parser: object = subparsers.add_parser('view')
+    vgr:         object = view_parser.add_mutually_exclusive_group()
+    
+    vgr.add_argument('-td', '--today', action='store_true', dest='today',
+                help='get a view of todays work')
+    vgr.add_argument('-t', '--task', dest='task',
+                help='get a view of all recorded times for the specified task')
+    vgr.add_argument('-y', '--year', dest='year',
+                help='get a view of all recorded times for the specified year\nformat: YYYY ')
+    #vgr.add_argument('-m', '--month', dest='month',
+    #            help='get a view of all recorded times for the specified month\nformat: MM')
+    vgr.add_argument('-d', '--date', dest='date',
+                help='get a view of all recorded times for the specified date\nformat:YYYY-MM-DD')
+    vgr.add_argument('-a', '--all', action='store_true', dest='all',
+                help='get an overview of all recorded times in the database')
+    view_parser.set_defaults(func=wrapper)
+
+    #Wipe arguement parser
+    wipe_parser: object = subparsers.add_parser('wipe')
+    
+    #wipe_parser.set_defaults(func=wipe.wipe_db)
+    wgr = wipe_parser.add_mutually_exclusive_group()
+    wgr.add_argument('-a', '--all', action='store_true', dest='all',
+                help='wipe every entry from database')
+    wgr.add_argument('-t', '--task', dest='task',
+                help='delete all entries recorded for specified task')
+    
+    args: object = parser.parse_args()
+   
+    if args.subparser == 'view':
+        args.func(view.main, vars(args)) 
+    elif args.subparser == 'init':
+        args.func()
+    #elif args.subparser == 'wipe':
+    #    args.func(vars(args))
+    else:
+        args.func(run_taima.run, args.task)
+        
+if __name__ == '__main__':
+    handle()
