@@ -9,8 +9,7 @@
 from _taima.init import init
 from _taima.main import run_taima 
 #from __view import view 
-#from __wipe import wipe
-#from util.db_connection import connect_db_quiet
+from _taima.delete import delete
 import argparse
 import curses
 from curses import wrapper
@@ -77,14 +76,14 @@ def handle() -> str:
                 help='get an overview of all recorded times in the database')
     view_parser.set_defaults(func=wrapper)
 
-    #Wipe arguement parser
-    wipe_parser: object = subparsers.add_parser('wipe')
+    #delete arguement parser
+    del_parser: object = subparsers.add_parser('del')
     
-    #wipe_parser.set_defaults(func=wipe.wipe_db)
-    wgr = wipe_parser.add_mutually_exclusive_group()
-    wgr.add_argument('-a', '--all', action='store_true', dest='all',
-                help='wipe every entry from database')
-    wgr.add_argument('-t', '--task', dest='task',
+    del_parser.set_defaults(func=delete.delete)
+    dgr = del_parser.add_mutually_exclusive_group()
+    dgr.add_argument('-a', '--all', action='store_true', dest='all',
+                help='delete all entries from database')
+    dgr.add_argument('-t', '--task', dest='task',
                 help='delete all entries recorded for specified task')
     
     args: object = parser.parse_args()
@@ -93,8 +92,8 @@ def handle() -> str:
         args.func(view.main, vars(args)) 
     elif args.subparser == 'init':
         args.func()
-    #elif args.subparser == 'wipe':
-    #    args.func(vars(args))
+    elif args.subparser == 'del':
+        args.func(vars(args))
     else:
         args.func(run_taima.run, args.task)
         
