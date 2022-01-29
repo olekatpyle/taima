@@ -32,7 +32,7 @@ class Session(object):
     #of the time object. After update of the dbo, the db gets updated too.
     def __update_dbo_and_db(self, time_obj: object):
         
-        times: tuple = time_obj.strf()
+        times: tuple = time_obj.strf('%c')
         type(self).db_obj.times.update({times[0]:times[1]})
         time_obj.calculate_total()
         type(self).db_obj.total += time_obj.total
@@ -61,7 +61,7 @@ class Session(object):
                     exec.submit(type(self).virt.nstruc.display_running_session)
                     exec.submit(type(self).virt.tassk.display_tb_unselected_active)
                     exec.submit(type(self).virt.taima.update_taima, type(self).db_obj, update_counter)                
-
+                                
                 curses.doupdate()
                 type(self).virt.nonblo.nodelay(1)
                 try:
@@ -80,6 +80,7 @@ class Session(object):
                         exec.submit(type(self).virt.taima.update_taima, type(self).db_obj, update_counter)
                         exec.submit(type(self).virt.nstruc.display_resume_session)
                         exec.submit(type(self).virt.tassk.display_tb_unselected_paused)
+                    
                     curses.doupdate()
                     curses.napms(1000)
                     type(self).virt.mesg.erase()
