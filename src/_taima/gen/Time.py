@@ -63,15 +63,16 @@ class Time(object):
     
     
     # stringify this instances start and end time and return both stored 
-    # in a tuple.
+    # in a tuple. A format must be supplied. Check out python docs for
+    # available formats.
     
-    def strf(self) -> tuple:
+    def strf(self, form: str) -> tuple:
         """
         Return start and end as string inside of a tuple, for this time
         instance.
         """
-        s: str = self.__start.strftime('%X')
-        e: str = self.__end.strftime('%X')
+        s: str = self.__start.strftime(form)
+        e: str = self.__end.strftime(form)
 
         return (s, e)
 

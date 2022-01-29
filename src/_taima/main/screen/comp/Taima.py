@@ -187,21 +187,21 @@ class Taima(Pad):
         #draw all entries line by line
         for i in range(len(latest)):
             t = Time()
-            t.start = datetime.strptime(latest[i], '%X')
-            t.end = datetime.strptime(times[latest[i]], '%X')
+            t.start = datetime.strptime(latest[i], '%c')
+            t.end = datetime.strptime(times[latest[i]], '%c')
             t.calculate_total()
-            stamps = t.strf()
+            stamps = t.strf('%X')
             s = stamps[0]
             e = stamps[1]
 
             x = self._tm_unselected_x + 1
             self._pad.addstr(y, x, s)
             
-            x += len(latest[i]) + 1
+            x += len(s) + 1
             self._pad.addstr(y, x, ':')
             x += 2
             self._pad.addstr(y, x, e)
-            x += len(times[latest[i]])+2
+            x += len(e)+2
             s = str(t.total) + 'min'
             self._pad.addstr(y, x, s, colors[2][i])
             
