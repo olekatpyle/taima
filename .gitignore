@@ -1,2 +1,4 @@
 __pycache__/
 .taima/
+sync
+.sync_exclude
