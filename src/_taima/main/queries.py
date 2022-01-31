@@ -1,4 +1,3 @@
-import sqlite3
 from _taima.gen.DB_Object import DB_Object    
 from _taima.gen.util.db_connection import connect
 from _taima.gen.screen.Color import Color as c

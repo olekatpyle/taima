@@ -4,7 +4,6 @@ from _taima.main.routines.animation import anima_per_frame
 from _taima.main.routines.animation.keyframes.anima_kf import ANIMA
 from concurrent.futures import ThreadPoolExecutor
 import curses
-import datetime
 
 # ----------------------------------------------------------------------------
 # SESSION CLASS 
@@ -32,8 +31,8 @@ class Session(object):
     #of the time object. After update of the dbo, the db gets updated too.
     def __update_dbo_and_db(self, time_obj: object):
         
-        times: tuple = time_obj.strf('%c')
-        type(self).db_obj.times.update({times[0]:times[1]})
+        new_times: tuple = time_obj.strf('%c')
+        type(self).db_obj.times.update({new_times[0]:new_t_times[1]})
         time_obj.calculate_total()
         type(self).db_obj.total += time_obj.total
         

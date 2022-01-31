@@ -89,7 +89,8 @@ def handle() -> str:
     args: object = parser.parse_args()
    
     if args.subparser == 'view':
-        args.func(view.main, vars(args)) 
+        #args.func(view.main, vars(args))
+        print('Not implemented yet..')
     elif args.subparser == 'init':
         args.func()
     elif args.subparser == 'del':

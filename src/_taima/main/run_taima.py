@@ -1,6 +1,5 @@
 
 import curses
-from curses import wrapper
 from _taima.gen.DB_Object import DB_Object 
 from _taima.gen.util.db_connection import ping_db
 from _taima.gen.screen.Color import Color as c
@@ -40,7 +39,6 @@ def run(stdscr: object, arg: str) -> None:
     # check if task argument was supplied on program call
     if arg:
         task: str = arg.strip()
-        arg = None        
     # if not, run the enter_taskname routine to let the user define one
     else:
         task: str = enter_taskname.run(virt.prompter, virt.prompt, virt.mesg) 
@@ -85,7 +83,7 @@ def run(stdscr: object, arg: str) -> None:
         try:
             key: int = virt.nonblo.getch()
         except:
-            key = None
+            key = -1 
 
         # start the session with space    
         if key == 32:
