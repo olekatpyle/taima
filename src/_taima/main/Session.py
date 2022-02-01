@@ -32,7 +32,7 @@ class Session(object):
     def __update_dbo_and_db(self, time_obj: object):
         
         new_times: tuple = time_obj.strf('%c')
-        type(self).db_obj.times.update({new_times[0]:new_t_times[1]})
+        type(self).db_obj.times.update({new_times[0]:new_times[1]})
         time_obj.calculate_total()
         type(self).db_obj.total += time_obj.total
         
