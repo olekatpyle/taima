@@ -29,6 +29,19 @@ The purpose of this application is to simply track your working times locally an
 </br>
 
 ---
+
+## Installation and Usage of taima~1.x.x
+
+### Prerequisites
+* sqlite3 3.7.15 or higher (see Python Docs)
+* python3.10 installed (development version)
+  * other python versions will be tested soon
+
+For version 1 of this application, you only need to clone the repository to your local machine. In order to allow for system wide program calls for the user, run the [`setup.sh`](./setup.sh) to set the PATH variable inside your `.bashrc`. You will need to either restart your terminal or run `source ~/.bashrc` in your shell to make this change take effect. Any other shell is currently not part of the setup process, but should easily be adjusted manually, since only a PATH variable for the taima executable needs to be added. 
+After that you are good to go to initiate a database in any working directory with `taima init` and run the program inside of it afterwards, as long as permission is granted for the directory by the system. 
+Future updates can be obtained with a `git pull origin main` or downloading the updated files.   
+
+---
 <b>Important Note</b>
 
 This application is published under the GNU General Public Licence v3.0, thus is to be seen as free software. For more information visit https://www.gnu.org/licenses/gpl-3.0.en.html 
@@ -120,21 +133,6 @@ Lastly the user may run `taima clean [option]`, to perform cleaning tasks on the
 * gui version
 
 ---
-
-## Installation and Usage of taima~1.x.x
-
-### Prerequisites
-* sqlite3 3.7.15 or higher (see Python Docs)
-* python3.10 installed (development version)
-  * other python versions will be tested soon
-
-For version 1 of this application, you only need to clone the repository to your local machine. In order to allow for system wide program calls for the user, run the [`setup.sh`](./setup.sh) to set the PATH variable inside your `.bashrc`. You will need to either restart your terminal or run `source ~/.bashrc` in your shell to make this change take effect. Any other shell is currently not part of the setup process, but should easily be adjusted manually, since only a PATH variable for the taima executable needs to be added. 
-After that you are good to go to initiate a database in any working directory with `taima init` and run the program inside of it afterwards, as long as permission is granted for the directory by the system. 
-Future updates can be obtained with a `git pull origin main` or downloading the updated files.   
-
----
-
-
 
 Any form of contribution, ideas and criticism is more than welcomed. Best wishes,
 
